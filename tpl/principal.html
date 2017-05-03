@@ -39,7 +39,7 @@
 
     ////////////////////////////////////////////////////////////////////////////
     
-    var onRegresar = function(evt) {
+    var onConfirmar = function(evt) {
         var target = evt.target;
 
         var confirm = phonon.confirm('¿Está seguro que desea eliminar este vehiculo?', 'Confirmación', false, 'Si', 'No');
@@ -69,10 +69,11 @@
               for(i=0; i<res.length; i++)
               {
                 var e = document.createElement('li');
-                e.innerHTML =('<a href="#!principal" class="pull-right icon icon-close" id="eliminar-' + res[i].id + '" value="'+ res[i].id +'"></a><a href="#!editar" class="pull-right icon icon-edit" id="editar"></a><div class="item-content"><span class="title">'+ res[i].placa +'</span><span class="body">'+ res[i].marca + '<br> '+ res[i].linea + '<br> '+ res[i].modelo +'</span></div><input type="hidden" id="id" value="'+ res[i].id +'">');                
+                e.innerHTML =('<a href="#!principal" class="pull-right icon icon-close" id="eliminar-' + res[i].id + '" value="'+ res[i].id +'"></a><a href="#!editar" class="pull-right icon icon-edit" id="editar-' + res[i].id + '"></a><div class="item-content"><span class="title">'+ res[i].placa +'</span><span class="body">'+ res[i].marca + '<br> '+ res[i].linea + '<br> '+ res[i].modelo +'</span></div>');
                 tabla.appendChild(e);
 
-                document.querySelector('#eliminar-'+res[i].id).on('tap', onRegresar);
+                document.querySelector('#eliminar-'+res[i].id).on('tap', onConfirmar);
+                document.querySelector('#editar-'+res[i].id).on('tap', onGet);
               }
               
 
@@ -94,13 +95,11 @@
     
      var onDelete = function(evt) {
 
-         var target = evt.target;
+      var target = evt.target;
 
-         var idCompleto = target.id.trim();
+      var idCompleto = target.id.trim();
          
-         var id = idCompleto.split('-')[1];
-
-alert(id);         
+      var id = idCompleto.split('-')[1];
          
       if(id == "")
       {
@@ -138,6 +137,50 @@ alert(id);
       indicator.close();
 
       return false;
+    };
+
+    ////////////////////////////////////////////////////////////////////////////
+
+    var onGet = function(evt) {
+        var target = evt.target;
+
+        var idCompleto = target.id.trim();
+
+        var id = idCompleto.split('-')[1];
+
+        if(id == "")
+        {
+          phonon.alert("Verifique el ID a consultar.", "Problemas!");
+
+          return false;
+        }
+
+        var req = phonon.ajax({
+            method: 'GET',
+            url: urlBase + 'vehiculos/' + id,
+            dataType: 'json',
+            timeout: 5000,
+
+            success: function(res, xhr) {
+                console.log(res);
+
+                document.querySelector('editar #placa').value = res.placa;
+                document.querySelector('editar #marca').value = res.marca;
+                document.querySelector('editar #linea').value = res.linea;
+                document.querySelector('editar #modelo').value = res.modelo;
+
+                return true;
+            },
+            error: function(res, flagError, xhr) {
+                console.error(flagError);
+                console.log(res);
+                console.log(xhr);
+
+                phonon.alert("Hubo un problema obteniendo el producto.", "Problemas!");
+            }
+        });
+
+        return false;
     };
 
 

@@ -32,64 +32,6 @@
 </editar>
 
 <script>
-    
-     var urlBase = "http://127.0.0.1:8000/api/"
 
-    ////////////////////////////////////////////////////////////////////////////
-    
-	page.onCreate = function () {
-        //document.querySelector('principal #editar').on('tap', onGet);
-        window.onload = onGet;
-    };
-
-    ////////////////////////////////////////////////////////////////////////////
-    
-    var onGet = function(evt) {
-        var target = evt.target;
-
-        var id = "2";
-
-        if(id == "")
-        {
-          phonon.alert("Verifique el ID a consultar.", "Problemas!");
-
-          return false;
-        }
-
-        var indicator = phonon.indicator('Procesando ...', false);
-
-        var req = phonon.ajax({
-            method: 'GET',
-            url: urlBase + 'vehiculos/' + id,
-            dataType: 'json',
-            timeout: 5000,
-            
-            success: function(res, xhr) {
-                console.log(res);
-
-                indicator.close();
-                
-                document.querySelector('editar #placa').value = res.placa;
-                document.querySelector('editar #marca').value = res.marca;
-                document.querySelector('editar #linea').value = res.linea;
-                document.querySelector('editar #modelo').value = res.modelo;
-
-                phonon.alert("Producto obtenido.", "Éxito!");
-
-                return true;
-            },
-            error: function(res, flagError, xhr) {
-                console.error(flagError);
-                console.log(res);
-                console.log(xhr);
-
-                phonon.alert("Hubo un problema obteniendo el producto.", "Problemas!");
-            }
-        });
-
-        indicator.close();
-
-        return false;
-    };
 
 </script>
