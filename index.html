@@ -4,8 +4,11 @@
         <meta charset="utf-8" />
         <meta name="format-detection" content="telephone=no" />
         <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height" />
-
         <link rel="stylesheet" href="dist/css/phonon.css" />
+        <link rel="stylesheet" href="dist/css/components">
+        <script src="dist/js/components/autocomplete.js"></script>
+        <link rel="stylesheet" href="dialogs.css">
+        <script src="dialogs.js"></script>
         <title>App</title>
     </head>
     <body>
@@ -21,40 +24,36 @@
         <!-- Popover tags go here -->
 
         <!-- the home page is the default one. This page does not require to call its content because we define on its tag.-->
-        <home data-page="true">
-
+        <login data-page="true" >
             <header class="header-bar">
                 <div class="center">
-                    <h1 class="title">Home</h1>
+                    <h1 class="title">Iniciar sesión</h1>
                 </div>
             </header>
-            <div class="content">
-
-                <ul class="list">
-                    <li class="divider"></li>
-                    <li><a class="padded-list" href="#!pagetwo">Login</a></li>
-                    <li><a class="padded-list" href="#!pagetree">Register</a></li>
-                    <li><a class="padded-list" style="visibility:hidden" href="#!pagefour">Restaurar Cuenta</a></li>
-                    <li><a class="padded-list" style="visibility:hidden" href="#!pagefive">Home Usuario</a></li>
-                    <li><a class="padded-list" style="visibility:hidden" href="#!pagesix">Ver Vehiculo</a></li>
-                    <li><a class="padded-list" style="visibility:hidden" href="#!pageseven">Agregar Vehiculo</a></li>
-                    <li><a class="padded-list" style="visibility:hidden" href="#!pageeight">Editar Vehiculo</a></li>
-                    <li><a class="padded-list" style="visibility:hidden" href="#!pagenine">Eliminar Vehiculo</a></li>
-                </ul>
-
+            
+            <div class="content padded-full">
+                <div class="input-wrapper">
+                    <input class="with-label" type="email" id="correo">
+                    <label class="floating-label" for="correo">Correo electrónico</label>
+                </div>
+                
+                <div class="input-wrapper">
+                    <input class="with-label" type="password" id="contraseña">
+                    <label class="floating-label" for="contraseña">Contraseña</label>
+                </div>
+                
+                <button class="btn btn-flat fit-parent primary" data-navigation="principal">Ingresar</button>
+                <button class="btn btn-flat fit-parent primary" data-navigation="contraseña">¿Olvidó su contraseña?</button>
+                <button class="btn btn-flat fit-parent primary" data-navigation="registro">Registrarme</button> 
             </div>
-        </home>
+        </login>
 
         <!-- for the second page, Phonon will load its content. -->
-        <pagetwo data-page="true"></pagetwo>
-        <pagetree data-page="true"></pagetree>
-        <pagefour data-page="true"></pagefour>
-        <pagefive data-page="true"></pagefive>
-        <pagesix data-page="true"></pagesix>
-        <pageseven data-page="true"></pageseven>
-        <pageeight data-page="true"></pageeight>
-        <pagenine data-page="true"></pagenine>
-
+        <principal data-page="true"></principal>
+        <contraseña data-page="true"></contraseña>
+        <registro data-page="true"></registro>
+        <agregar data-page="true"></agregar>
+        <editar data-page="true"></editar>
 
         <!-- scripts -->
         <script src="dist/js/phonon.js"></script>
