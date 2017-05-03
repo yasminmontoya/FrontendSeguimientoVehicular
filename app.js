@@ -1,6 +1,6 @@
 phonon.options({
     navigator: {
-        defaultPage: 'home',
+        defaultPage: 'login',
         animatePages: true,
         enableBrowserBackButton: true,
         templateRootDirectory: './tpl'
@@ -16,7 +16,7 @@ var app = phonon.navigator();
  * For the home page, we do not need to perform actions during
  * page events such as onCreate, onReady, etc
 */
-app.on({page: 'home', preventClose: false, content: null});
+app.on({page: 'login', preventClose: false, content: null});
 
 /**
  * However, on the second page, we want to define the activity scope.
@@ -26,14 +26,8 @@ app.on({page: 'home', preventClose: false, content: null});
  * here we did not implement it, but if you do, you can use readyDelay to add a small delay
  * between the OnCreate and the OnReady callbacks
 */
-app.on({page: 'pagetwo', preventClose: true, content: 'pagetwo.html', readyDelay: 1}, function(activity) {
 
- activity.onClose(function(self) {
-            self.close();     
-   });
-});
-
-app.on({page: 'pagetree', preventClose: true, content: 'pagetree.html', readyDelay: 1}, function(activity) {
+app.on({page: 'principal', preventClose: true, content: 'principal.html', readyDelay: 1}, function(activity) {
 
 
   activity.onClose(function(self) {
@@ -42,7 +36,7 @@ app.on({page: 'pagetree', preventClose: true, content: 'pagetree.html', readyDel
  
 });
 
-app.on({page: 'pagefour', preventClose: true, content: 'pagefour.html', readyDelay: 1}, function(activity) {
+app.on({page: 'contraseña', preventClose: true, content: 'contraseña.html', readyDelay: 1}, function(activity) {
 
 
   activity.onClose(function(self) {
@@ -51,7 +45,7 @@ app.on({page: 'pagefour', preventClose: true, content: 'pagefour.html', readyDel
  
 });
 
-app.on({page: 'pagefive', preventClose: true, content: 'pagefive.html', readyDelay: 1}, function(activity) {
+app.on({page: 'registro', preventClose: true, content: 'registro.html', readyDelay: 1}, function(activity) {
 
 
   activity.onClose(function(self) {
@@ -60,7 +54,7 @@ app.on({page: 'pagefive', preventClose: true, content: 'pagefive.html', readyDel
  
 });
 
-app.on({page: 'pagesix', preventClose: true, content: 'pagesix.html', readyDelay: 1}, function(activity) {
+app.on({page: 'agregar', preventClose: true, content: 'agregar.html', readyDelay: 1}, function(activity) {
 
 
   activity.onClose(function(self) {
@@ -69,7 +63,7 @@ app.on({page: 'pagesix', preventClose: true, content: 'pagesix.html', readyDelay
  
 });
 
-app.on({page: 'pageseven', preventClose: true, content: 'pageseven.html', readyDelay: 1}, function(activity) {
+app.on({page: 'editar', preventClose: true, content: 'editar.html', readyDelay: 1}, function(activity) {
 
 
   activity.onClose(function(self) {
@@ -77,25 +71,6 @@ app.on({page: 'pageseven', preventClose: true, content: 'pageseven.html', readyD
    });
  
 });
-
-app.on({page: 'pageeight', preventClose: true, content: 'pageeight.html', readyDelay: 1}, function(activity) {
-
-
-  activity.onClose(function(self) {
-            self.close();     
-   });
- 
-});
-
-app.on({page: 'pagenine', preventClose: true, content: 'pagenine.html', readyDelay: 1}, function(activity) {
-
-
-  activity.onClose(function(self) {
-            self.close();     
-   });
- 
-});
-
 
 // Let's go!
 app.start();
