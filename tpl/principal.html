@@ -7,35 +7,138 @@
     </header>
 
     <div class="content">
-        <ul class="list">
+        <ul class="list" id="tabla">
             <li class="divider">Lista de Vehiculos</li>
+            
+<!--
             <li class="item-expanded">
                 <a href="#!principal" class="pull-right icon icon-close" id="eliminar"></a>
-                <a href="#!editar" class="pull-right icon icon-edit"></a>
+                <a href="#!editar" class="pull-right icon icon-edit" id="editar"></a>
                 <div class="item-content">
-                    <span class="title">YAA69C</span>
-                    <span class="body">Kymko</span>
+                    <span class="title" id="vehiculo"></span>
+                    <span class="body"></span>
                 </div>
             </li>
-         </ul>  
+-->
+         </ul>
     </div>
+   
     <button class="floating-action padded-full icon icon-add active primary" data-navigation="agregar"></button>
 </principal>
 
 <script>
+    
+    var urlBase = "http://127.0.0.1:8000/api/"
+
+    ////////////////////////////////////////////////////////////////////////////
+    
 	page.onCreate = function () {
-      document.querySelector('#eliminar').on('tap', onRegresar);
+        window.onload = onGetAll;
+       
     };
 
+    ////////////////////////////////////////////////////////////////////////////
+    
     var onRegresar = function(evt) {
         var target = evt.target;
 
         var confirm = phonon.confirm('¿Está seguro que desea eliminar este vehiculo?', 'Confirmación', false, 'Si', 'No');
         confirm.on('confirm', function() {
-          phonon.navigator().changePage(phonon.navigator().previousPage);
+            onDelete(evt);
         });
         confirm.on('cancel', function() {
           phonon.alert('Se canceló el proceso', 'Información');
         });
+    };    
+
+    ////////////////////////////////////////////////////////////////////////////
+    
+    var onGetAll = function(evt) {
+      var target = evt.target;
+
+      var req = phonon.ajax({
+          method: 'GET',
+          url: urlBase + 'vehiculos',
+          dataType: 'json',
+          timeout: 5000,
+         
+          success: function(res, xhr) {
+
+              var tabla = document.querySelector('#tabla');
+
+              for(i=0; i<res.length; i++)
+              {
+                var e = document.createElement('li');
+                e.innerHTML =('<a href="#!principal" class="pull-right icon icon-close" id="eliminar-' + res[i].id + '" value="'+ res[i].id +'"></a><a href="#!editar" class="pull-right icon icon-edit" id="editar"></a><div class="item-content"><span class="title">'+ res[i].placa +'</span><span class="body">'+ res[i].marca + '<br> '+ res[i].linea + '<br> '+ res[i].modelo +'</span></div><input type="hidden" id="id" value="'+ res[i].id +'">');                
+                tabla.appendChild(e);
+
+                document.querySelector('#eliminar-'+res[i].id).on('tap', onRegresar);
+              }
+              
+
+              return true;
+          },
+          error: function(res, flagError, xhr) {
+              console.error(flagError);
+              console.log(res);
+              console.log(xhr);
+
+              phonon.alert("Hubo un problema obteniendo los vehiculos.", "Problemas!");
+          }
+      });
+
+      return false;
     };
+
+    ////////////////////////////////////////////////////////////////////////////
+    
+     var onDelete = function(evt) {
+
+         var target = evt.target;
+
+         var idCompleto = target.id.trim();
+         
+         var id = idCompleto.split('-')[1];
+
+alert(id);         
+         
+      if(id == "")
+      {
+        phonon.alert("Verifique el ID a eliminar.", "Problemas!");
+
+        return false;
+      }
+
+      var indicator = phonon.indicator('Procesando ...', false);
+
+      var req = phonon.ajax({
+          method: 'DELETE',
+          url: urlBase + 'vehiculos/' + id,
+          dataType: 'json',
+          timeout: 5000,
+          
+          success: function(res, xhr) {
+              console.log(res);
+
+              indicator.close();
+
+              phonon.alert("Vehiculo eliminado.", "Éxito!");
+
+              return true;
+          },
+          error: function(res, flagError, xhr) {
+              console.log(res);
+              console.error(flagError);
+              console.log(xhr);
+
+              phonon.alert("Hubo un problema removiendo el vehiculo.", "Problemas!");
+          }
+      });
+
+      indicator.close();
+
+      return false;
+    };
+
+
 </script>

@@ -36,7 +36,7 @@ app.on({page: 'principal', preventClose: true, content: 'principal.html', readyD
  
 });
 
-app.on({page: 'contraseña', preventClose: true, content: 'contraseña.html', readyDelay: 1}, function(activity) {
+app.on({page: 'contrasenia', preventClose: true, content: 'contrasenia.html', readyDelay: 1}, function(activity) {
 
 
   activity.onClose(function(self) {
