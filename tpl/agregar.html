@@ -3,11 +3,11 @@
         <div class="left">
             <button class="btn pull-left icon icon-arrow-back" data-navigation="principal"></button>
             <div class="center">
-            <h1 class="title">Agregar Vehiculo</h1>
+            <h1 class="title">Agregar vehículo</h1>
             </div>
         </div>
     </header>
-    
+
     <div class="content">
         <div class="content padded-full">
             <div class="input-wrapper">
@@ -18,42 +18,39 @@
                     <input class="with-label" type="text" id="marca">
                     <label class="floating-label" for="marca">Marca</label>
                 </div>
-                
+
                 <div class="input-wrapper">
                     <input class="with-label" type="text" id="linea">
-                    <label class="floating-label" for="linea">Linea</label>
+                    <label class="floating-label" for="linea">Línea</label>
                 </div>
                 <div class="input-wrapper">
                     <input class="with-label" type="number" id="modelo">
                     <label class="floating-label" for="modelo">Modelo</label>
                 </div>
             <br><br>
-            <button class="btn fit-parent primary" data-navigation="principal" id="agregar">Agregar</button>  
+            <button class="btn fit-parent primary" data-navigation="principal" id="agregar">Agregar</button>
         </div>
-    </div>    
+    </div>
 </agregar>
 
 <script>
     var urlBase = "http://127.0.0.1:8000/api/"
-    
-    ////////////////////////////////////////////////////////////////////////////   
-    
+
+    ////////////////////////////////////////////////////////////////////////////
+
     page.onCreate = function () {
         document.querySelector('#agregar').on('tap', onPost);
     };
-    
+
     ////////////////////////////////////////////////////////////////////////////
 
     var onPost = function(evt) {
       var target = evt.target;
-        
+
       var placa = document.querySelector('#placa').value.trim();
       var marca = document.querySelector('#marca').value.trim();
       var linea = document.querySelector('#linea').value.trim();
       var modelo = document.querySelector('#modelo').value.trim();
-
-
-      var indicator = phonon.indicator('Procesando ...', false);
 
       var req = phonon.ajax({
           method: 'POST',
@@ -62,13 +59,11 @@
           contentType: 'application/json',
           data: { user_id: "1", placa: placa, marca: marca, linea: linea, modelo: modelo , fase_id:"", servicio_id:"", created_at:"", updated_at: ""},
           timeout: 5000,
-          
+
           success: function(res, xhr) {
               console.log(res);
 
-              indicator.close();
-
-              phonon.alert("Vehiculo creado.", "Éxito!");
+              phonon.alert("Vehículo creado.", "Éxito!");
 
               return true;
           },
@@ -77,11 +72,9 @@
               console.log(res);
               console.log(xhr);
 
-              phonon.alert("Hubo un problema creando el vehiculo.", "Problemas!");
+              phonon.alert("Hubo un problema creando el vehículo.", "Problemas!");
           }
       });
-
-      indicator.close();
 
       return false;
     };

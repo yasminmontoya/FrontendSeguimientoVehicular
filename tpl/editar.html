@@ -3,7 +3,7 @@
         <div class="left">
             <button class="btn pull-left icon icon-arrow-back" data-navigation="principal"></button>
             <div class="center">
-            <h1 class="title">Editar Vehiculo</h1>
+            <h1 class="title">Editar vehículo</h1>
             </div>
         </div>
     </header>
@@ -23,7 +23,7 @@
 
                 <div class="input-wrapper">
                     <input class="with-label" type="text" id="linea">
-                    <label class="floating-label" for="linea">Linea</label>
+                    <label class="floating-label" for="linea">Línea</label>
                 </div>
                 <div class="input-wrapper">
                     <input class="with-label" type="number" id="modelo">
@@ -56,15 +56,6 @@
       var linea = document.querySelector('#linea').value.trim();
       var modelo = document.querySelector('#modelo').value.trim();
 
-      if(id == "")
-      {
-        phonon.alert("Verifique el ID a actualizar.", "Problemas!");
-
-        return false;
-      }
-
-      var indicator = phonon.indicator('Procesando ...', false);
-
       var req = phonon.ajax({
           method: 'PUT',
           url: urlBase + 'vehiculos/' + id,
@@ -75,8 +66,6 @@
 
           success: function(res, xhr) {
               console.log(res);
-
-              indicator.close();
 
               phonon.alert("Vehiculo actualizado.", "Éxito!");
 
@@ -90,8 +79,6 @@
               phonon.alert("Hubo un problema actualizando el vehiculo.", "Problemas!");
           }
       });
-
-      indicator.close();
 
       return false;
     };

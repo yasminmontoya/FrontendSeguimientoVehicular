@@ -8,7 +8,7 @@
 
     <div class="content">
         <ul class="list" id="tabla">
-            <li class="divider">Lista de Vehiculos</li>
+            <li class="divider">Lista sus vehículos</li>
             
 <!--
             <li class="item-expanded">
@@ -100,13 +100,6 @@
       var idCompleto = target.id.trim();
          
       var id = idCompleto.split('-')[1];
-         
-      if(id == "")
-      {
-        phonon.alert("Verifique el ID a eliminar.", "Problemas!");
-
-        return false;
-      }
 
       var indicator = phonon.indicator('Procesando ...', false);
 
@@ -121,7 +114,7 @@
 
               indicator.close();
 
-              phonon.alert("Vehiculo eliminado.", "Éxito!");
+              phonon.alert("Vehículo eliminado.", "Éxito!");
 
               return true;
           },
@@ -130,7 +123,7 @@
               console.error(flagError);
               console.log(xhr);
 
-              phonon.alert("Hubo un problema removiendo el vehiculo.", "Problemas!");
+              phonon.alert("Hubo un problema removiendo el vehículo.", "Problemas!");
           }
       });
 
@@ -147,13 +140,6 @@
         var idCompleto = target.id.trim();
 
         var id = idCompleto.split('-')[1];
-
-        if(id == "")
-        {
-          phonon.alert("Verifique el ID a consultar.", "Problemas!");
-
-          return false;
-        }
 
         var req = phonon.ajax({
             method: 'GET',
@@ -177,7 +163,7 @@
                 console.log(res);
                 console.log(xhr);
 
-                phonon.alert("Hubo un problema obteniendo el vehiculo.", "Problemas!");
+                phonon.alert("Hubo un problema obteniendo el vehículo.", "Problemas!");
             }
         });
 
