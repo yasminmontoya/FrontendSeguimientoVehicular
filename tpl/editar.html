@@ -8,6 +8,8 @@
     
     <div class="content">
         <div class="content padded-full">
+            <input type="hidden" id="id">
+
             <div class="input-wrapper">
                     <input class="with-label" type="text" id="placa">
                     <label class="floating-label" for="placa">Placa</label>
@@ -26,12 +28,72 @@
                     <label class="floating-label" for="modelo">Modelo</label>
                 </div>
             <br><br>
-            <button class="btn fit-parent primary" data-navigation="principal">Editar</button>  
+            <button class="btn fit-parent primary" data-navigation="principal" id="editar">Editar</button>
         </div>
     </div>
 </editar>
 
 <script>
+
+    var urlBase = "http://127.0.0.1:8000/api/"
+
+    ////////////////////////////////////////////////////////////////////////////
+
+	page.onCreate = function () {
+        document.querySelector('#editar').on('tap', onPut);
+    };
+
+    ////////////////////////////////////////////////////////////////////////////
+
+    var onPut = function(evt) {
+      var target = evt.target;
+
+      var id= document.querySelector('#id').value.trim();
+      var placa = document.querySelector('#placa').value.trim();
+      var marca = document.querySelector('#marca').value.trim();
+      var linea = document.querySelector('#linea').value.trim();
+      var modelo = document.querySelector('#modelo').value.trim();
+
+      if(id == "")
+      {
+        phonon.alert("Verifique el ID a actualizar.", "Problemas!");
+
+        return false;
+      }
+
+      var indicator = phonon.indicator('Procesando ...', false);
+
+      var req = phonon.ajax({
+          method: 'PUT',
+          url: urlBase + 'vehiculos/' + id,
+          dataType: 'json',
+          contentType: 'application/json',
+          data: { user_id: "1", placa: placa, marca: marca, linea: linea, modelo: modelo , fase_id:"", servicio_id:"", created_at:"", updated_at: ""},
+          timeout: 5000,
+
+          success: function(res, xhr) {
+              console.log(res);
+
+              indicator.close();
+
+              phonon.alert("Vehiculo actualizado.", "Éxito!");
+
+              return true;
+          },
+          error: function(res, flagError, xhr) {
+              console.error(flagError);
+              console.log(res);
+              console.log(xhr);
+
+              phonon.alert("Hubo un problema actualizando el vehiculo.", "Problemas!");
+          }
+      });
+
+      indicator.close();
+
+      return false;
+    };
+
 
 
 </script>

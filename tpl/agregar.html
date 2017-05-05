@@ -50,15 +50,15 @@
       var linea = document.querySelector('#linea').value.trim();
       var modelo = document.querySelector('#modelo').value.trim();
 
+
       var indicator = phonon.indicator('Procesando ...', false);
 
       var req = phonon.ajax({
           method: 'POST',
           url: urlBase + 'vehiculos',
-          crossDomain: true,
           dataType: 'json',
           contentType: 'application/json',
-          data: { user_id: "1" , placa: placa, marca: marca, linea: linea, modelo: modelo ,fase_id : null, servicio_id: null , created_at: "", updated_at: ""},
+          data: { user_id: "1", placa: placa, marca: marca, linea: linea, modelo: modelo , fase_id:"", servicio_id:"", created_at:"", updated_at: ""},
           timeout: 5000,
           
           success: function(res, xhr) {

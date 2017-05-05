@@ -164,6 +164,7 @@
             success: function(res, xhr) {
                 console.log(res);
 
+                document.querySelector('editar #id').value = id;
                 document.querySelector('editar #placa').value = res.placa;
                 document.querySelector('editar #marca').value = res.marca;
                 document.querySelector('editar #linea').value = res.linea;
@@ -176,7 +177,7 @@
                 console.log(res);
                 console.log(xhr);
 
-                phonon.alert("Hubo un problema obteniendo el producto.", "Problemas!");
+                phonon.alert("Hubo un problema obteniendo el vehiculo.", "Problemas!");
             }
         });
 
