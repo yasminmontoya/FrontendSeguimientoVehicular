@@ -72,5 +72,14 @@ app.on({page: 'editar', preventClose: true, content: 'editar.html', readyDelay: 
  
 });
 
+app.on({page: 'mantenimientos', preventClose: true, content: 'mantenimientos.html', readyDelay: 1}, function(activity) {
+
+
+  activity.onClose(function(self) {
+            self.close();
+   });
+
+});
+
 // Let's go!
 app.start();
