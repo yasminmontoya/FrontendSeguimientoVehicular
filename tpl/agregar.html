@@ -11,22 +11,22 @@
     <div class="content">
         <div class="content padded-full">
             <div class="input-wrapper">
-                    <input class="with-label" type="text" id="placa">
-                    <label class="floating-label" for="placa">Placa</label>
-                </div>
-                <div class="input-wrapper">
-                    <input class="with-label" type="text" id="marca">
-                    <label class="floating-label" for="marca">Marca</label>
-                </div>
+                <input class="with-label" type="text" id="placa">
+                <label class="floating-label" for="placa">Placa</label>
+            </div>
+            <div class="input-wrapper">
+                <input class="with-label" type="text" id="marca">
+                <label class="floating-label" for="marca">Marca</label>
+            </div>
 
-                <div class="input-wrapper">
-                    <input class="with-label" type="text" id="linea">
-                    <label class="floating-label" for="linea">Línea</label>
-                </div>
-                <div class="input-wrapper">
-                    <input class="with-label" type="number" id="modelo">
-                    <label class="floating-label" for="modelo">Modelo</label>
-                </div>
+            <div class="input-wrapper">
+                <input class="with-label" type="text" id="linea">
+                <label class="floating-label" for="linea">Línea</label>
+            </div>
+            <div class="input-wrapper">
+                <input class="with-label" type="number" id="modelo">
+                <label class="floating-label" for="modelo">Modelo</label>
+            </div>
             <br><br>
             <button class="btn fit-parent primary" data-navigation="principal" id="agregar">Agregar</button>
         </div>
@@ -57,14 +57,13 @@
           url: urlBase + 'vehiculos',
           dataType: 'json',
           contentType: 'application/json',
-          data: { user_id: "1", placa: placa, marca: marca, linea: linea, modelo: modelo , fase_id:"", servicio_id:"", created_at:"", updated_at: ""},
+          data: { user_id: "1", placa: placa, marca: marca, linea: linea, modelo: modelo, created_at:"", updated_at: ""},
           timeout: 5000,
 
           success: function(res, xhr) {
               console.log(res);
 
               phonon.alert("Vehículo creado.", "Éxito!");
-
               return true;
           },
           error: function(res, flagError, xhr) {
