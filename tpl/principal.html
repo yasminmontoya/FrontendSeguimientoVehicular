@@ -9,7 +9,7 @@
     <div class="content">
         <ul class="list" id="tabla">
             <li class="divider">Lista sus vehículos</li>
-            
+
 <!--
             <li class="item-expanded">
                 <a href="#!principal" class="pull-right icon icon-close" id="eliminar"></a>
@@ -22,23 +22,23 @@
 -->
          </ul>
     </div>
-   
+
     <button class="floating-action padded-full icon icon-add active primary" data-navigation="agregar"></button>
 </principal>
 
 <script>
-    
+
     var urlBase = "http://127.0.0.1:8000/api/"
 
     ////////////////////////////////////////////////////////////////////////////
-    
+
 	page.onCreate = function () {
         window.onload = onGetAll;
-       
+
     };
 
     ////////////////////////////////////////////////////////////////////////////
-    
+
     var onConfirmar = function(evt) {
         var target = evt.target;
 
@@ -49,10 +49,10 @@
         confirm.on('cancel', function() {
           phonon.alert('Se canceló el proceso', 'Información');
         });
-    };    
+    };
 
     ////////////////////////////////////////////////////////////////////////////
-    
+
     var onGetAll = function(evt) {
       var target = evt.target;
 
@@ -61,7 +61,7 @@
           url: urlBase + 'vehiculos',
           dataType: 'json',
           timeout: 5000,
-         
+
           success: function(res, xhr) {
 
               var tabla = document.querySelector('#tabla');
@@ -69,13 +69,13 @@
               for(i=0; i<res.length; i++)
               {
                 var e = document.createElement('li');
-                e.innerHTML =('<a href="#!principal" class="pull-right icon icon-close" id="eliminar-' + res[i].id + '" value="'+ res[i].id +'"></a><a href="#!editar" class="pull-right icon icon-edit" id="editar-' + res[i].id + '"></a><div class="item-content"><span class="title">'+ res[i].placa +'</span><span class="body">'+ res[i].marca + '<br> '+ res[i].linea + '<br> '+ res[i].modelo +'</span></div>');
+                e.innerHTML =('<a href="#!principal" class="pull-right icon icon-close" id="eliminar-' + res[i].id + '" value="'+ res[i].id +'"></a><a href="#!editar" class="pull-right icon icon-edit" id="editar-' + res[i].id + '"></a><a href="#!mantenimientos"><div class="item-content"><span class="title">'+ res[i].placa +'</span><span class="body">'+ res[i].marca + '<br> '+ res[i].linea + '<br> '+ res[i].modelo +'</span></div>');
                 tabla.appendChild(e);
 
                 document.querySelector('#eliminar-'+res[i].id).on('tap', onConfirmar);
                 document.querySelector('#editar-'+res[i].id).on('tap', onGet);
               }
-              
+
 
               return true;
           },
@@ -92,13 +92,13 @@
     };
 
     ////////////////////////////////////////////////////////////////////////////
-    
+
      var onDelete = function(evt) {
 
       var target = evt.target;
 
       var idCompleto = target.id.trim();
-         
+
       var id = idCompleto.split('-')[1];
 
       var indicator = phonon.indicator('Procesando ...', false);
@@ -108,7 +108,7 @@
           url: urlBase + 'vehiculos/' + id,
           dataType: 'json',
           timeout: 5000,
-          
+
           success: function(res, xhr) {
               console.log(res);
 
