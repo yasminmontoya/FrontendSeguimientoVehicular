@@ -3,38 +3,79 @@
         <div class="left">
             <button class="btn pull-left icon icon-arrow-back" data-navigation="$previous-page"></button>
             <div class="center">
-            <h1 class="title">Registro</h1>
+                <h1 class="title">Registro</h1>
             </div>
         </div>
     </header>
-    
+
     <div class="content">
         <div class="content padded-full">
             <div class="input-wrapper">
-                    <input class="with-label" type="text" id="nombre">
-                    <label class="floating-label" for="nombre">Nombre</label>
-                </div>
-                <div class="input-wrapper">
-                    <input class="with-label" type="email" id="correo">
-                    <label class="floating-label" for="correo">Correo electrónico</label>
-                </div>
-                
-                <div class="input-wrapper">
-                    <input class="with-label" type="password" id="contraseña">
-                    <label class="floating-label" for="contraseña">Contraseña</label>
-                </div>
-                <div class="input-wrapper">
-                    <input class="with-label" type="password" id="rcontraseña">
-                    <label class="floating-label" for="rcontraseña">Repetir Contraseña</label>
-                </div>
+                <input class="with-label" type="text" id="nombre">
+                <label class="floating-label" for="nombre">Nombre</label>
+            </div>
+            <div class="input-wrapper">
+                <input class="with-label" type="email" id="correo">
+                <label class="floating-label" for="correo">Correo electrónico</label>
+            </div>
+            <div class="input-wrapper">
+                <input class="with-label" type="password" id="contrasenia">
+                <label class="floating-label" for="contrasenia">Contraseña</label>
+            </div>
+            <div class="input-wrapper">
+                <input class="with-label" type="password" id="repetida">
+                <label class="floating-label" for="repetida">Repetir Contraseña</label>
+            </div>
             <br><br>
-            <button class="btn fit-parent primary">Registrarme</button>  
+            <button class="btn fit-parent primary" id="registrar">Registrarme</button>
         </div>
     </div>
 </registro>
 
 <script>
-	/*
-	 * JavaScript code can be executed when the template is loaded
-	 */
+    var urlBase = "http://127.0.0.1:8000/api/"
+
+    ////////////////////////////////////////////////////////////////////////////
+
+    page.onCreate = function () {
+        document.querySelector('#registrar').on('tap', onPost);
+    };
+
+    ////////////////////////////////////////////////////////////////////////////
+
+    var onPost = function(evt) {
+      var target = evt.target;
+
+      var nombre = document.querySelector('registro #nombre').value.trim();
+      var correo = document.querySelector('registro #correo').value.trim();
+      var contrasenia = document.querySelector('registro #contrasenia').value.trim();
+      var repetida = document.querySelector('registro #repetida').value.trim();
+
+      var req = phonon.ajax({
+          method: 'POST',
+          url: urlBase + 'usuarios',
+          dataType: 'json',
+          contentType: 'application/json',
+          data: { name: nombre, email: correo, password: contrasenia, created_at:"", updated_at: ""},
+          timeout: 5000,
+
+          success: function(res, xhr) {
+              console.log(res);
+
+              phonon.alert("Usuario creado.", "Éxito!");
+
+              return true;
+          },
+          error: function(res, flagError, xhr) {
+              console.error(flagError);
+              console.log(res);
+              console.log(xhr);
+
+              phonon.alert("Hubo un problema creando el usuario.", "Problemas!");
+          }
+      });
+
+      return false;
+    };
+
 </script>
