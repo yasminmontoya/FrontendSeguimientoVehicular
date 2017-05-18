@@ -5,9 +5,104 @@
         <h1 class="title">Mantenimientos</h1>
         </div>
     </header>
-
     <div class="content">
+        <div class="content padded-full">
+            <table class="table">
+                <tr>
+                    <thead>
+                        <th>Nombre</th>
+                        <th>Estado</th>
+                    </thead>
+                    <tbody id="body">
+                    </tbody>
+                </tr>
+            </table>
+        </div>
     </div>
-
-
 </mantenimientos>
+
+<script>
+
+    var urlBase =  "http://yasminmontoya-vehiculos.herokuapp.com/api/"
+
+    ////////////////////////////////////////////////////////////////////////////
+
+	page.onCreate = function () {
+        window.onload = onGetAll;
+    };
+
+    ////////////////////////////////////////////////////////////////////////////
+
+
+    var onGetAll = function(evt) {
+      var target = evt.target;
+
+      var req = phonon.ajax({
+          method: 'GET',
+          url: urlBase + 'mantenimientos',
+          dataType: 'json',
+          timeout: 5000,
+
+          success: function(res, xhr) {
+
+              var body = document.querySelector('#body');
+
+              for(i=0; i<res.length; i++)
+              {
+                var e = document.createElement('tr');
+                e.innerHTML =('<td id="' + res[i].fase_id + '">' + '</td><td>'+ res[i].estado + '</td>');
+                body.appendChild(e);
+                onGet(evt);
+              }
+
+
+              return true;
+          },
+          error: function(res, flagError, xhr) {
+              console.error(flagError);
+              console.log(res);
+              console.log(xhr);
+
+              phonon.alert("Hubo un problema obteniendo los mantenimientos.", "Problemas!");
+              }
+          });
+
+          return false;
+        };
+
+    var onGet = function(evt) {
+        var target = evt.target;
+
+        var filas=document.getElementsByTagName('tbody');
+
+        for (var i = 1; i < filas.length; i++) {
+        var id= i;
+
+        var req = phonon.ajax({
+            method: 'GET',
+            url: urlBase + 'fases/' + id,
+            dataType: 'json',
+            timeout: 5000,
+
+            success: function(res, xhr) {
+                console.log(res);
+
+                document.getElementById(id).innerHTML = res.nombre;
+
+                return true;
+            },
+            error: function(res, flagError, xhr) {
+                console.error(flagError);
+                console.log(res);
+                console.log(xhr);
+
+                phonon.alert("Hubo un problema obteniendo el servicio.", "Problemas!");
+            }
+        });
+
+        return false;
+        }
+    };
+
+
+</script>
