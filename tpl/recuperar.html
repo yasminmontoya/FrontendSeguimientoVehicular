@@ -1,0 +1,39 @@
+<recuperar class="app-page">
+    <header class="header-bar">
+        <div class="left">
+            <button class="btn pull-left icon icon-arrow-back" data-navigation="login"></button>
+            <div class="center">
+            <h1 class="title">Recuperar Contraseña</h1>
+            </div>
+        </div>
+    </header>
+
+    <div class="content">
+         <div class="content padded-full">
+             <div class="input-wrapper">
+                <input class="with-label" type="email" id="correo">
+                <label class="floating-label" for="correo">Correo electrónico</label>
+             </div>
+             <br><br>
+             <button class="btn fit-parent primary" id="enviar">Enviar</button>
+         </div>
+    </div>
+</recuperar>
+
+<script>
+     page.onCreate = function () {
+        document.querySelector('#enviar').on('tap', onGetEmail);
+    };
+
+    var onGetEmail = function (evt) {
+      var target = evt.target;
+      var email = document.querySelector('recuperar #correo').value.trim();
+
+     if (email.length == 0) {
+            phonon.alert("Debe completar los campos", "Aviso");
+        }else{
+            phonon.alert('Se ha enviado la contraseña al correo '+email,'Información');
+        }
+    };
+
+</script>
