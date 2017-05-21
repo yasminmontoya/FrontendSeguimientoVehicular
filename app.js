@@ -41,7 +41,6 @@ app.on({page: 'principal', preventClose: true, content: 'principal.html', readyD
    });
  
 });
- });
 
 
 app.on({page: 'recuperar', preventClose: true, content: 'recuperar.html', readyDelay: 1}, function(activity) {
