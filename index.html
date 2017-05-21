@@ -9,44 +9,9 @@
     </head>
     <body>
 
-        <!-- Panel tags go here -->
-
-        <!-- Side Panel tags go here -->
-
-        <!-- Notification tags go here -->
-
-        <!-- Dialog tags go here -->
-
-        <!-- Popover tags go here -->
-
-        <!-- the home page is the default one. This page does not require to call its content because we define on its tag.-->
-        <login data-page="true" >
-            <header class="header-bar">
-                <div class="center">
-                    <h1 class="title">Iniciar sesión</h1>
-                </div>
-            </header>
-            
-            <div class="content padded-full">
-                <div class="input-wrapper">
-                    <input class="with-label" type="email" id="correo">
-                    <label class="floating-label" for="correo">Correo electrónico</label>
-                </div>
-                
-                <div class="input-wrapper">
-                    <input class="with-label" type="password" id="contraseña">
-                    <label class="floating-label" for="contraseña">Contraseña</label>
-                </div>
-                
-                <button class="btn btn-flat fit-parent primary" data-navigation="principal" id="ingresar">Ingresar</button>
-                <button class="btn btn-flat fit-parent primary" data-navigation="contrasenia" id="contrasenia">¿Olvidó su contraseña?</button>
-                <button class="btn btn-flat fit-parent primary" data-navigation="registro" id="registro">Registrarme</button> 
-            </div>
-        </login>
-
-        <!-- for the second page, Phonon will load its content. -->
+        <login data-page="true"></login>
         <principal data-page="true"></principal>
-        <contrasenia data-page="true"></contrasenia>
+        <recuperar data-page="true"></recuperar>
         <registro data-page="true"></registro>
         <agregar data-page="true"></agregar>
         <editar data-page="true"></editar>

@@ -16,7 +16,13 @@ var app = phonon.navigator();
  * For the home page, we do not need to perform actions during
  * page events such as onCreate, onReady, etc
 */
-app.on({page: 'login', preventClose: false, content: null});
+app.on({page: 'login', preventClose: false, content: 'login.html', readyDelay: 1}, function(activity) {
+
+
+  activity.onClose(function(self) {
+            self.close();
+   });
+ });
 
 /**
  * However, on the second page, we want to define the activity scope.
@@ -35,8 +41,10 @@ app.on({page: 'principal', preventClose: true, content: 'principal.html', readyD
    });
  
 });
+ });
 
-app.on({page: 'contrasenia', preventClose: true, content: 'contrasenia.html', readyDelay: 1}, function(activity) {
+
+app.on({page: 'recuperar', preventClose: true, content: 'recuperar.html', readyDelay: 1}, function(activity) {
 
 
   activity.onClose(function(self) {
@@ -46,7 +54,6 @@ app.on({page: 'contrasenia', preventClose: true, content: 'contrasenia.html', re
 });
 
 app.on({page: 'registro', preventClose: true, content: 'registro.html', readyDelay: 1}, function(activity) {
-
 
   activity.onClose(function(self) {
             self.close();     
@@ -78,8 +85,7 @@ app.on({page: 'mantenimientos', preventClose: true, content: 'mantenimientos.htm
   activity.onClose(function(self) {
             self.close();
    });
-
-});
+ });
 
 // Let's go!
 app.start();
