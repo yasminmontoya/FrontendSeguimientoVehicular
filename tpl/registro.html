@@ -51,6 +51,8 @@
       var contrasenia = document.querySelector('registro #contrasenia').value.trim();
       var repetida = document.querySelector('registro #repetida').value.trim();
 
+      if (contrasenia.length != 0 || repetida.length != 0) {
+      if(contrasenia==repetida){
       var req = phonon.ajax({
           method: 'POST',
           url: urlBase + 'usuarios',
@@ -76,6 +78,13 @@
       });
 
       return false;
+
+    }else{
+        phonon.alert("Las contraseñas no coinciden", "Error");
+    }
+    }else{
+        phonon.alert("Los campos de la password no pueden quedar vacios");
+    }
     };
 
 </script>
