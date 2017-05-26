@@ -1,0 +1,92 @@
+<link rel="stylesheet" href="forms.css">
+<script src="forms.js"></script>
+
+<login class="app-page">
+    <header class="header-bar">
+        <div class="center">
+            <h1 class="title">Iniciar sesión</h1>
+        </div>
+    </header>
+
+    <div class="content padded-full">
+        <div class="input-wrapper">
+            <input class="with-label" type="email" id="email">
+            <label class="floating-label" for="email">Correo electrónico</label>
+        </div>
+
+        <div class="input-wrapper">
+            <input class="with-label" type="password" id="password">
+            <label class="floating-label" for="password">Contraseña</label>
+        </div>
+
+        <button class="btn btn-flat fit-parent primary" id="ingresar">Ingresar</button>
+        <button class="btn btn-flat fit-parent primary" data-navigation="recuperar" id="recuperar">¿Olvidó su contraseña?</button>
+        <button class="btn btn-flat fit-parent primary" data-navigation="registro" id="registro">Registrarme</button>
+    </div>
+</login>
+
+<script>
+
+    var urlBase = "http://yasminmontoya-vehiculos.herokuapp.com/api/"
+
+    ////////////////////////////////////////////////////////////////////////////
+
+	page.onCreate = function () {
+       document.querySelector('login #ingresar').on('tap', onGetAll);
+
+    };
+
+    ////////////////////////////////////////////////////////////////////////////
+
+
+    var onGetAll = function(evt) {
+      var target = evt.target;
+
+      var email = document.querySelector('login #email').value.trim();
+      var password = document.querySelector('login #password').value.trim();
+
+      if (email.length != 0 || password.length != 0) {
+
+      var req = phonon.ajax({
+          method: 'GET',
+          url: urlBase + 'usuarios',
+          dataType: 'json',
+          timeout: 5000,
+
+          success: function(res, xhr) {
+
+              var estado;
+
+              for(i=0; i<res.length; i++)
+              {
+                if(res[i].email == email){
+                    estado=true;
+                    break;
+                }else{
+                    estado=false;
+                }
+              }
+
+              if(estado==false){
+                  phonon.alert("Porfavor ingrese, nombre de usuario y contraseña correctos.","Error");
+              }else{
+                  phonon.alert("Bienvenido","Información");
+              }
+
+              return true;
+          },
+          error: function(res, flagError, xhr) {
+              console.error(flagError);
+              console.log(res);
+              console.log(xhr);
+
+              phonon.alert("Hubo un problema obteniendo los usuarios.", "Problemas!");
+          }
+      });
+      }else{
+          phonon.alert("Debe completar los campos", "Aviso");
+      }
+
+    return false;
+    };
+</script>
