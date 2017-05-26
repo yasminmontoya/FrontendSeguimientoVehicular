@@ -28,15 +28,14 @@
     ////////////////////////////////////////////////////////////////////////////
 
 	page.onCreate = function () {
-        window.onload = onGetAll;
+        window.onload = onGetMantenimientos;
     };
 
     ////////////////////////////////////////////////////////////////////////////
 
+    var onGetMantenimientos = function () {
 
-    var onGetAll = function(evt) {
-      var target = evt.target;
-
+      var array;
       var req = phonon.ajax({
           method: 'GET',
           url: urlBase + 'mantenimientos',
@@ -45,18 +44,10 @@
 
           success: function(res, xhr) {
 
-              var body = document.querySelector('#body');
-
-              for(i=0; i<res.length; i++)
-              {
-                var e = document.createElement('tr');
-                e.innerHTML =('<td id="' + res[i].fase_id + '">' + '</td><td>'+ res[i].estado + '</td>');
-                body.appendChild(e);
-                onGet(evt);
-              }
-
-
+              //callback(res);
+              onGetFase(res);
               return true;
+
           },
           error: function(res, flagError, xhr) {
               console.error(flagError);
@@ -64,32 +55,39 @@
               console.log(xhr);
 
               phonon.alert("Hubo un problema obteniendo los mantenimientos.", "Problemas!");
+
+
               }
           });
+         return false;
+    };
 
-          return false;
-        };
-
-    var onGet = function(evt) {
-        var target = evt.target;
-
-        var filas=document.getElementsByTagName('tbody');
-
-        for (var i = 1; i < filas.length; i++) {
-        var id= i;
+    var onGetFase= function(mantenimientos) {
 
         var req = phonon.ajax({
             method: 'GET',
-            url: urlBase + 'fases/' + id,
+            url: urlBase + 'fases',
             dataType: 'json',
             timeout: 5000,
 
             success: function(res, xhr) {
-                console.log(res);
+                //callback(res);
+                //console.log(mantenimientos);
+                 var body = document.querySelector('#body');
 
-                document.getElementById(id).innerHTML = res.nombre;
-
+                 for(i=0;i<mantenimientos.length;i++){
+                     console.log(mantenimientos[i])
+                    for(j=0; j<res.length; j++){
+                        //console.log(res[j])
+                        if(mantenimientos[i].fase_id == res[j].id){
+                        var e = document.createElement('tr');
+                        e.innerHTML =('<td>'+res[j].nombre + '</td><td>'+ mantenimientos[i].estado +'</td>');
+                        body.appendChild(e);
+                        }
+                    }
+                }
                 return true;
+
             },
             error: function(res, flagError, xhr) {
                 console.error(flagError);
@@ -101,8 +99,27 @@
         });
 
         return false;
-        }
+
     };
 
+/*
+    function llenar_tabla(){
+        var body = document.querySelector('#body');
+
+        onGetMantenimientos(function (mantenimientos) {
+            onGetFase(function (fases) {
+                for(i=0;i<mantenimientos.length;i++){
+                    for(j=0; j<fases.length; j++){
+                        if(mantenimientos[i].fases_id == fases[j].id){
+                        var e = document.createElement('tr');
+                        e.innerHTML =('<td>'+fases[j].nombre + '</td><td>'+ mantenimientos[i].estado +'</td>');
+                        body.appendChild(e);
+                        }
+                    }
+                }
+            });
+        });
+    }
+*/
 
 </script>
